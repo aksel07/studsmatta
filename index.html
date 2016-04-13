@@ -18,6 +18,19 @@ p {
 	font-family: "arial";
 	font-size: 20px;
 }
+
+.playground {
+	position: relative;
+	background-color: #56d400;
+	width: 500px;
+	height: 500px;
+}
+
+#studsmatta {
+	position: absolute;
+	top: 400px;
+	left: 100px;
+}
 </style>
 </head>
 <body>
@@ -60,7 +73,11 @@ p {
 		<img src="arrow_none.png">
 	</div>
 </div>
-<div style="position: relative;">
+<div class="playground">
+<svg width="300" height="100" id="studsmatta">
+  <ellipse cx="150" cy="50" rx="145" ry="45" stroke="green" stroke-width="4" fill="blue" />
+</svg>
+
 <img src="boll.png" style="position: absolute;" id="boll">
 <img src="glass.png" style="position: absolute; height: 100px; width: auto;" id="glass">
 </div>
