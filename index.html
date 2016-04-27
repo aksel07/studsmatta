@@ -80,6 +80,23 @@ p {
 	</div>
 </div>
 <script>
+// Variabler
+var y = 0;
+var hastighet_y = 0;
+var studsmatta_y = 350;
+
+function gameLoop() {
+	hastighet_y = hastighet_y + 1;
+	y = y + hastighet_y;
+
+	if (y >= studsmatta_y) {
+		y = studsmatta_y;
+		hastighet_y = -hastighet_y;
+	}
+
+	$('#smiley').css({top: y + 'px'});
+}
+
 function goLeft(item) {
 	$(item).animate({left: '0px'});
 }
@@ -111,20 +128,7 @@ $(document).keydown(function(event) {
 	}
 	event.preventDefault(); // prevent the default action (scroll / move caret)
 });
-var y = 0;
-var hastighet_y = 0;
-var studsmatta_y = 350;
-function gameLoop() {
-	hastighet_y = hastighet_y + 1;
-	y = y + hastighet_y;
 
-	if (y >= studsmatta_y) {
-		y = studsmatta_y;
-		hastighet_y = -hastighet_y;
-	}
-
-	$('#smiley').css({top: y + 'px'});
-}
 $(document).ready(function(){
 	setInterval(gameLoop, 50);
 });
