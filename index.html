@@ -34,6 +34,8 @@ p {
 
 #smiley {
 	position: absolute;
+	top: 0px;
+	left: 200px;
 }
 </style>
 </head>
@@ -111,9 +113,15 @@ $(document).keydown(function(event) {
 });
 var y = 0;
 var hastighet_y = 0;
+var studsmatta_y = 350;
 function gameLoop() {
 	hastighet_y = hastighet_y + 1;
 	y = y + hastighet_y;
+
+	if (y >= studsmatta_y) {
+		y = studsmatta_y;
+		hastighet_y = -hastighet_y;
+	}
 
 	$('#smiley').css({top: y + 'px'});
 }
