@@ -81,12 +81,15 @@ p {
 </div>
 <script>
 // Variabler
-var y = 0;
+var x = $("#smiley").position().left;
+var y = $("#smiley").position().top;
+var hastighet_x = 0;
 var hastighet_y = 0;
 var studsmatta_y = 350;
 
 function gameLoop() {
 	hastighet_y = hastighet_y + 1;
+	x = x + hastighet_x;
 	y = y + hastighet_y;
 
 	if (y >= studsmatta_y) {
@@ -94,20 +97,20 @@ function gameLoop() {
 		hastighet_y = -hastighet_y;
 	}
 
-	$('#smiley').css({top: y + 'px'});
+	$('#smiley').css({left: x + 'px', top: y + 'px'});
 }
 
 function goLeft(item) {
-	$(item).animate({left: '0px'});
+	hastighet_x = hastighet_x - 1;
 }
 function goRight(item) {
-	$(item).animate({left: '250px'});
+	hastighet_x = hastighet_x + 1;
 }
 function goUp(item) {
-	$(item).animate({top: '0px'});
+	hastighet_y = hastighet_y - 1;
 }
 function goDown(item) {
-	$(item).animate({top: '250px'});
+	hastighet_y = hastighet_y + 1;
 }
 $(document).keydown(function(event) {
 	switch(event.which) {
