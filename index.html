@@ -90,8 +90,26 @@ function goUp(item) {
 function goDown(item) {
 	$(item).animate({top: '250px'});
 }
+$(document).keydown(function(event) {
+	switch(event.which) {
+	case 37: // left
+		goLeft('#smiley');
+		break;
+	case 38: // up
+		goUp('#smiley');
+		break;
+	case 39: // right
+		goRight('#smiley');
+		break;
+	case 40: // down
+		goDown('#smiley');
+		break;
+	default:
+		return; // exit this handler for other keys
+	}
+	event.preventDefault(); // prevent the default action (scroll / move caret)
+});
 $(document).ready(function(){
-
 	$('#smiley').animate({left: '250px'});
 });
 </script>
