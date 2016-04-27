@@ -109,8 +109,16 @@ $(document).keydown(function(event) {
 	}
 	event.preventDefault(); // prevent the default action (scroll / move caret)
 });
+var y = 0;
+var hastighet_y = 0;
+function gameLoop() {
+	hastighet_y = hastighet_y + 1;
+	y = y + hastighet_y;
+
+	$('#smiley').css({top: y + 'px'});
+}
 $(document).ready(function(){
-	$('#smiley').animate({left: '250px'});
+	setInterval(gameLoop, 50);
 });
 </script>
 </body>
