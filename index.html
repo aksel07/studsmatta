@@ -92,9 +92,27 @@ function gameLoop() {
 	x = x + hastighet_x;
 	y = y + hastighet_y;
 
-	if (y >= studsmatta_y) {
+	if (y > studsmatta_y) {
 		y = studsmatta_y;
-		hastighet_y = -hastighet_y;
+		var smiley_center_x = x + $("#smiley").width() / 2;
+		if (smiley_center_x > $("#studsmatta").position().left &&
+				smiley_center_x < $("#studsmatta").position().left + $("#studsmatta").width()) {
+			hastighet_y = -hastighet_y;
+		}
+		else {
+			hastighet_y = -hastighet_y * 0.2;
+		}
+	}
+
+	if (x < 0) {
+		x = 0;
+		hastighet_x = -hastighet_x;
+	}
+
+  var right_edge = $(".playground").width() - $("#smiley").width();
+	if (x > right_edge) {
+		x = right_edge;
+		hastighet_x = -hastighet_x;
 	}
 
 	$('#smiley').css({left: x + 'px', top: y + 'px'});
