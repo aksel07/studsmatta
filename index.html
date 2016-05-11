@@ -59,6 +59,9 @@ var hastighet_x = 0;
 var hastighet_y = 0;
 var studsmatta_y = 350;
 
+var bounceAudio = document.createElement('audio');
+bounceAudio.setAttribute('src', 'bounce.mp3');
+
 function gameLoop() {
 	hastighet_y = hastighet_y + 1;
 	x = x + hastighet_x;
@@ -69,6 +72,12 @@ function gameLoop() {
 		var smiley_center_x = x + $("#smiley").width() / 2;
 		if (smiley_center_x > $("#studsmatta").position().left &&
 				smiley_center_x < $("#studsmatta").position().left + $("#studsmatta").width()) {
+		  if (hastighet_y > 2) {
+			  bounceAudio.pause();
+			  bounceAudio.currentTime = 0;
+			  bounceAudio.volume = Math.min(hastighet_y / 30, 1.0);
+			  bounceAudio.play();
+		  }
 			hastighet_y = -hastighet_y;
 			$("#smiley_image").attr("src", "smiley_happy.svg");
 		}
