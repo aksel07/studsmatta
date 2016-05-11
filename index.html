@@ -48,7 +48,7 @@ p {
 	  <ellipse cx="150" cy="50" rx="145" ry="45" stroke="green" stroke-width="4" fill="blue" />
 	</svg>
 	<div id="smiley">
-		<img src="smiley_happy.svg"/>
+		<img id="smiley_image" src="smiley_happy.svg"/>
 	</div>
 </div>
 <script>
@@ -70,9 +70,11 @@ function gameLoop() {
 		if (smiley_center_x > $("#studsmatta").position().left &&
 				smiley_center_x < $("#studsmatta").position().left + $("#studsmatta").width()) {
 			hastighet_y = -hastighet_y;
+			$("#smiley_image").attr("src", "smiley_happy.svg");
 		}
 		else {
 			hastighet_y = -hastighet_y * 0.2;
+			$("#smiley_image").attr("src", "smiley_sad.svg");
 		}
 	}
 
