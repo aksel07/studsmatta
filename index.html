@@ -62,6 +62,7 @@ var kantstuds = 0.2; // Hur mycket hastighet som blir kvar efter en studs mot ka
 var studsfaktor = 0.9; // Hur mycket som finns kvar av hastigheten när man studsar på mattan.
 var hoppkraft = 4;
 var bromskraft = 4;
+var sidokraft = 3;
 var pressedKeys = {}; // Alla knappar som är nedtryckta för tillfället.
 var keyLeft  = 37;
 var keyUp    = 38;
@@ -95,6 +96,13 @@ function gameLoop() {
 			if (pressedKeys[keyDown]) {
 				hastighet_y += bromskraft;
 			}
+			if (pressedKeys[keyLeft]) {
+				hastighet_x -= sidokraft;
+			}
+			if (pressedKeys[keyRight]) {
+				hastighet_x += sidokraft;
+			}
+			hastighet_x += (Math.random() - 0.5) * 2; // Sĺumptal mellan -1 och 1.
 		}
 		else {
 			hastighet_y = -hastighet_y * kantstuds;
