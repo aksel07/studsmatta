@@ -58,6 +58,15 @@ var y = $("#smiley").position().top;
 var hastighet_x = 0;
 var hastighet_y = 0;
 var studsmatta_y = 350;
+var kantstuds = 0.2; // Hur mycket hastighet som blir kvar efter en studs mot kanterna vänster, höger och ned.
+var studsfaktor = 0.9; // Hur mycket som finns kvar av hastigheten när man studsar på mattan.
+var hoppkraft = 4;
+var bromskraft = 4;
+var pressedKeys = {}; // Alla knappar som är nedtryckta för tillfället.
+var keyLeft  = 37;
+var keyUp    = 38;
+var keyRight = 39;
+var keyDown  = 40;
 
 var bounceAudio = document.createElement('audio');
 bounceAudio.setAttribute('src', 'bounce.mp3');
@@ -67,35 +76,41 @@ function gameLoop() {
 	x = x + hastighet_x;
 	y = y + hastighet_y;
 
-	if (y > studsmatta_y) {
+	if (y > studsmatta_y) { // Nedre kant
 		y = studsmatta_y;
 		var smiley_center_x = x + $("#smiley").width() / 2;
 		if (smiley_center_x > $("#studsmatta").position().left &&
-				smiley_center_x < $("#studsmatta").position().left + $("#studsmatta").width()) {
+				smiley_center_x < $("#studsmatta").position().left + $("#studsmatta").width()) { // Innanför studsmattan
 		  if (hastighet_y > 2) {
 			  bounceAudio.pause();
 			  bounceAudio.currentTime = 0;
 			  bounceAudio.volume = Math.min(hastighet_y / 30, 1.0);
 			  bounceAudio.play();
 		  }
-			hastighet_y = -hastighet_y;
+			hastighet_y = -hastighet_y * studsfaktor;
 			$("#smiley_image").attr("src", "smiley_happy.svg");
+			if (pressedKeys[keyUp]) {
+				hastighet_y -= hoppkraft;
+			}
+			if (pressedKeys[keyDown]) {
+				hastighet_y += bromskraft;
+			}
 		}
 		else {
-			hastighet_y = -hastighet_y * 0.2;
+			hastighet_y = -hastighet_y * kantstuds;
 			$("#smiley_image").attr("src", "smiley_sad.svg");
 		}
 	}
 
 	if (x < 0) {
 		x = 0;
-		hastighet_x = -hastighet_x;
+		hastighet_x = -hastighet_x * kantstuds;
 	}
 
   var right_edge = $(".playground").width() - $("#smiley").width();
 	if (x > right_edge) {
 		x = right_edge;
-		hastighet_x = -hastighet_x;
+		hastighet_x = -hastighet_x * kantstuds;
 	}
 
 	$('#smiley').css({left: x + 'px', top: y + 'px'});
@@ -114,25 +129,21 @@ function goDown(item) {
 	hastighet_y = hastighet_y + 1;
 }
 $(document).keydown(function(event) {
+	pressedKeys[event.which] = true;
 	switch(event.which) {
-	case 37: // left
-		goLeft('#smiley');
-		break;
-	case 38: // up
-		goUp('#smiley');
-		break;
-	case 39: // right
-		goRight('#smiley');
-		break;
-	case 40: // down
-		goDown('#smiley');
-		break;
+	case keyLeft:
+	case keyUp:
+	case keyRight:
+	case keyDown:
+	  break;
 	default:
 		return; // exit this handler for other keys
 	}
 	event.preventDefault(); // prevent the default action (scroll / move caret)
 });
-
+$(document).keyup(function(event) {
+	pressedKeys[event.which] = false;
+});
 $(document).ready(function(){
 	setInterval(gameLoop, 50);
 });
