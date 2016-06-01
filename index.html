@@ -71,6 +71,8 @@ var keyDown  = 40;
 
 var bounceAudio = document.createElement('audio');
 bounceAudio.setAttribute('src', 'bounce.mp3');
+var thudAudio = document.createElement('audio');
+thudAudio.setAttribute('src', 'thud.mp3');
 
 function gameLoop() {
 	hastighet_y = hastighet_y + 1;
@@ -104,7 +106,13 @@ function gameLoop() {
 			}
 			hastighet_x += (Math.random() - 0.5) * 2; // Sĺumptal mellan -1 och 1.
 		}
-		else {
+		else { // Utanför studsmattan
+			if (hastighet_y > 2) {
+			  thudAudio.pause();
+			  thudAudio.currentTime = 0;
+			  thudAudio.volume = Math.min(hastighet_y / 30, 1.0);
+			  thudAudio.play();
+		  }
 			hastighet_y = -hastighet_y * kantstuds;
 			$("#smiley_image").attr("src", "smiley_sad.svg");
 		}
